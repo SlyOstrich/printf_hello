@@ -5,7 +5,7 @@ Summary:        A sample package, saying hello, RAIDIX
 License:        GPL
 URL:            https://github.com/SlyOstrich/printf_hello
 Source0:        %{name}-%{version}.tar.gz
-Provides:       libhello.so
+
 %define     _build_id_links none
 
 %description
@@ -27,8 +27,8 @@ cd %{name}-%{version}
 %{__make} install DESTDIR=%{buildroot}
 
 %clean
-#%{__rm} -rf $RPM_BUILD_ROOT
-#%{__rm} -rf $RPM_BUILD_DIR/*
+%{__rm} -rf $RPM_BUILD_ROOT
+%{__rm} -rf $RPM_BUILD_DIR/*
 
 %files
 %defattr(-,root,root)
