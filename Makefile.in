@@ -1,0 +1,30 @@
+CC	      = @CC@
+LIB_PATH	= -L/usr/lib64 -L.
+
+CFLAGS	  = @CFLAGS@ -fPIC
+
+ifeq ($(PREFIX),)
+    PREFIX := /usr
+endif
+
+
+all: print_hello
+	@echo "Build complete"
+
+libhello.so:
+	$(CC) $(CFLAGS) -shared -o libhello.so hello.c
+
+print_hello: libhello.so
+	$(CC) $(CFLAGS) $(LIB_PATH) -lhello main.c -o print_hello
+
+install: libhello.so print_hello
+	install -d $(DESTDIR)$(PREFIX)/lib64/
+	install -m 644 libhello.so $(DESTDIR)$(PREFIX)/lib64/
+	install -d $(DESTDIR)$(PREFIX)/include/
+	install -m 644 hello.h $(DESTDIR)$(PREFIX)/include/
+	install -d $(DESTDIR)$(PREFIX)/bin/
+	install -m 755 print_hello $(DESTDIR)$(PREFIX)/bin/
+
+clean:
+	rm -f libhello.so
+	rm -f main
